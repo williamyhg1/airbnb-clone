@@ -1,10 +1,8 @@
 import React from "react";
 import "./Card.css";
-import {Link} from "react-router-dom"
 
 function Card({ src, title, description, price }) {
   return (
-    <Link to="/search">
     <div className="card">
       <img src={src} alt="" />
       <div className="card_info">
@@ -13,7 +11,6 @@ function Card({ src, title, description, price }) {
         <h3>{price}</h3>
       </div>
     </div>
-    </Link>
   );
 }
 
