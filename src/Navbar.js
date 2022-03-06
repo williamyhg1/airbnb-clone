@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import "./Banner.css";
+import "./Navbar.css";
 import { Button } from "@mui/material";
 import Search from "./Search";
 import { useNavigate } from "react-router";
 
-function Banner() {
+function Navbar() {
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   return (
-    <div className="banner">
-      <div className="banner_search">
+    <div className="navbar">
+      <div className="navbar_search">
         {showSearch && <Search />}
         <Button
           onClick={() => {
             setShowSearch(!showSearch);
           }}
-          className="banner_searchButton"
+          className="navbar_searchButton"
           variant="outlined"
         >
           {showSearch ? "Hide" : "Search Date"}
         </Button>
       </div>
-      <div className="banner_info">
+      <div className="navbar_info">
         <h1>Your home away from home</h1>
         <h5>Plan a different kind of gateway to uncover the hidden gems.</h5>
         <Button onClick={() => navigate("/search")} variant="outlined">
@@ -32,4 +32,4 @@ function Banner() {
   );
 }
 
-export default Banner;
+export default Navbar;
