@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 
 function Card({ src, title, description, price }) {
   return (
-    <Link to="/search">
-      <div className="card">
+    <div className="card">
+      <Link to="/search">
         <img src={src} alt="" />
-        <div className="card_info">
-          <h2>{title}</h2>
-          <h4>{description}</h4>
-          <h3>{price}</h3>
-        </div>
+      </Link>
+      <div className="card_info">
+        <h2>{title}</h2>
+        <h4>{description}</h4>
+        <h3>{price}</h3>
       </div>
-    </Link>
+    </div>
   );
 }
 
