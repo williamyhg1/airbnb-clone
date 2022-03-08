@@ -1,4 +1,14 @@
 .home_section {
     display: flex;
     padding: 30px;
+    justify-content: space-evenly;
+}
+
+.card {
+    transition: transform 100ms ease-in;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.07);
 }
