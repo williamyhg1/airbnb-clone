@@ -5,6 +5,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
+import FormDialogues from "./FormDialogue";
 
 export default function Header() {
   return (
@@ -21,7 +22,7 @@ export default function Header() {
         <SearchIcon />
       </div>
       <div className="header_right">
-        <p>Become a host</p>
+        <FormDialogues />
         <LanguageIcon />
         <ExpandMoreIcon />
         <Avatar />
