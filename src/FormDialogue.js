@@ -1,11 +1,12 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import "./FormDialog.css";
 
 export default function FormDialog() {
@@ -21,29 +22,60 @@ export default function FormDialog() {
 
   return (
     <div>
-      <Button color="primary" style={{ width: 160, height: 40 }} variant="outlined" onClick={handleClickOpen}>
+      <Button
+        color="primary"
+        style={{ width: 160, height: 40 }}
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
         Become a host
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Add a property</DialogTitle>
+   
         <DialogContent>
+       
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Add your property to our databse with property title, description, desired price and photos.
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            id="title"
+            label="Property Title"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Descreption"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="price"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Photo URL"
+            fullWidth
+            variant="outlined"
+          />
+   
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>
