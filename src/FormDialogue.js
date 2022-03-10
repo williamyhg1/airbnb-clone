@@ -32,13 +32,14 @@ export default function FormDialog() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add a property</DialogTitle>
-   
+
         <DialogContent>
-       
           <DialogContentText>
-            Add your property to our databse with property title, description, desired price and photos.
+            Add your property to our databse with property title, description,
+            desired price and photos.
           </DialogContentText>
           <TextField
+            autoComplete="off"
             autoFocus
             margin="dense"
             id="title"
@@ -47,6 +48,7 @@ export default function FormDialog() {
             variant="outlined"
           />
           <TextField
+            autoComplete="off"
             autoFocus
             margin="dense"
             id="description"
@@ -55,22 +57,23 @@ export default function FormDialog() {
             variant="outlined"
           />
           <TextField
+            autoComplete="off"
             autoFocus
             margin="dense"
-            id="name"
-            label="price"
+            id="price"
+            label="Desired price"
             fullWidth
             variant="outlined"
           />
           <TextField
+            autoComplete="off"
             autoFocus
             margin="dense"
-            id="name"
+            id="photo"
             label="Photo URL"
             fullWidth
             variant="outlined"
           />
-   
         </DialogContent>
 
         <DialogActions>
