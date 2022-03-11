@@ -8,17 +8,38 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./FormDialog.css";
+import { useState } from "react";
+
 
 export default function FormDialog() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [photo, setPhoto] = useState("");
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (event) => {
+event.preventDefault();
     setOpen(false);
   };
+
+  // const handleSubmit= () => {
+  //   <AddedItem 
+  //   title={title}
+  //   description={description}
+  //   price={price}
+  //   photo={photo}
+  //    />
+  //    console.log(title)
+  //    console.log(description)
+  //    console.log(price)
+  //    console.log(photo)
+     
+  // }
 
   return (
     <div>
@@ -31,6 +52,7 @@ export default function FormDialog() {
         Become a host
       </Button>
       <Dialog open={open} onClose={handleClose}>
+
         <DialogTitle>Add a property</DialogTitle>
 
         <DialogContent>
@@ -39,6 +61,7 @@ export default function FormDialog() {
             desired price and photos.
           </DialogContentText>
           <TextField
+            onChange={(e) => setTitle(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -48,15 +71,17 @@ export default function FormDialog() {
             variant="outlined"
           />
           <TextField
+            onChange={(e) => setDescription(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
             id="description"
-            label="Descreption"
+            label="Description"
             fullWidth
             variant="outlined"
           />
           <TextField
+            onChange={(e) => setPrice(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -66,6 +91,7 @@ export default function FormDialog() {
             variant="outlined"
           />
           <TextField
+            onChange={(e) => setPhoto(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -81,6 +107,7 @@ export default function FormDialog() {
           <Button onClick={handleClose}>Submit</Button>
         </DialogActions>
       </Dialog>
+      
     </div>
   );
 }
