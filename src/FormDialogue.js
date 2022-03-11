@@ -58,7 +58,7 @@ event.preventDefault();
         <DialogContent>
           <DialogContentText>
             Add your property to our databse with property title, description,
-            desired price and photos.
+            desired price and a photo.
           </DialogContentText>
           <TextField
             onChange={(e) => setTitle(e.target.value)}
