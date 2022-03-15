@@ -6,16 +6,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import DATA from "./DATA";
 import { ref, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
-
-
 function AddedItems() {
-    const [listings, setListings] = useState("");
-
+  const [listings, setListings] = useState("");
   useEffect(() => {
     const ListingsRef = ref(db, "Listings");
     onValue(ListingsRef, (snapshot) => {
@@ -25,11 +21,14 @@ function AddedItems() {
   }, []);
 
   const addedListings = Object.entries(listings).map(([key, data]) => (
-    <Card sx={{ maxWidth: 400 }} key={key}>
+    <Card sx={{ maxWidth: 400 }} className="card" key={key}>
       {" "}
       <CardActionArea>
         <CardMedia component="img" height="300" image={data.img} alt="" />
         <CardContent>
+        <Typography variant="body2" color="text.secondary">
+            Property ID : {key}
+          </Typography>
           <Typography gutterBottom variant="h5" component="div">
             {data.title}
           </Typography>
@@ -43,9 +42,7 @@ function AddedItems() {
       </CardActionArea>
     </Card>
   ));
-  return (
-    <>{addedListings}</>
-  )
+  return <>{addedListings}</>;
 }
 
-export default AddedItems
+export default AddedItems;

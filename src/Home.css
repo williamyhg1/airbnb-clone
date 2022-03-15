@@ -1,12 +1,16 @@
 .home_section {
     display: flex;
-    padding: 30px;
-    justify-content: space-evenly;
+    
+    flex-wrap: wrap;
+    margin: 10px;
+    justify-content: center;
+    
 }
 
 .card {
     transition: transform 100ms ease-in;
     cursor: pointer;
+    margin: 20px;
 }
 
 .card:hover {
