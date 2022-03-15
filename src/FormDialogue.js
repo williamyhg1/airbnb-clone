@@ -59,7 +59,7 @@ export default function FormDialog() {
         <DialogContent>
           <DialogContentText>
             Add or update your home with your customised property ID. Enter
-            property title, description, rate and a photo URL to start.
+            a property title, description, rate and photo URL to start.
           </DialogContentText>
           <TextField
             onChange={(e) => setListingId(e.target.value)}
