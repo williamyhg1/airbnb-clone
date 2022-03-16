@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import Navbar from "./Navbar";
 import Card from "@mui/material/Card";
@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import DATA from "./DATA";
 import AddedItems from "./AddedItems";
+import db from "./firebase";
+import { ref, onValue } from "firebase/database";
 
 const Home = () => {
   const allCategory = DATA.category.map((item, index) => (
@@ -42,12 +44,23 @@ const Home = () => {
     </Card>
   ));
 
+  const [listings, setListings] = useState("");
+  useEffect(() => {
+    const ListingsRef = ref(db, "Listings");
+    onValue(ListingsRef, (snapshot) => {
+      const data = snapshot.val();
+      setListings(data);
+    });
+  }, []);
+
   return (
     <div className="home">
       <Navbar />
       <div className="home_section">{allCategory}</div>
-      <div className="home_section">{allListings}</div>
-      <div className="home_section"><AddedItems/></div>
+
+      <div className="home_section">
+        {listings ? <AddedItems /> : allListings}
+      </div>
     </div>
   );
 };
