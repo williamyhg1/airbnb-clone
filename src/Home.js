@@ -26,10 +26,27 @@ const Home = () => {
     </Card>
   ));
 
+  const allListings = DATA.homeListings.map((item, index) => (
+    <Card sx={{ maxWidth: 400 }} className="card" key={index}>
+      <CardActionArea>
+        <CardMedia component="img" height="300" image={item.img} alt="" />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {item.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  ));
+
   return (
     <div className="home">
       <Navbar />
       <div className="home_section">{allCategory}</div>
+      <div className="home_section">{allListings}</div>
       <div className="home_section"><AddedItems/></div>
     </div>
   );

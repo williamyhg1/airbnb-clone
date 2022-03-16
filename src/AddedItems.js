@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, remove } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
@@ -21,6 +21,10 @@ function AddedItems() {
       setListings(data);
     });
   }, []);
+
+  const removeListingData = () =>{
+    remove(ref(db, "Listings/" + 7))
+  }
 
   const addedListings = Object.entries(listings).map(([key, data]) => (
     <Card sx={{ maxWidth: 400 }} className="card">
@@ -47,7 +51,7 @@ function AddedItems() {
           <Typography variant="h6" color="text.primary">
             ${data.price}/night
           </Typography>
-          <IconButton>
+          <IconButton onClick={removeListingData}>
           <DeleteOutlineOutlinedIcon fontSize="medium" />
           </IconButton>
             </div>

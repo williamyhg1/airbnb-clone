@@ -20,6 +20,29 @@ const DATA = {
         "Comfortable private places, with room for friends or family.",
     },
   ],
+  homeListings: [
+    {
+      img: "https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NjJ8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=720&h=400&q=60",
+      title: "3 Bedroom townhouse in Windsor",
+      description:
+        "Superhost with a stunning view of the beachside in Sunny Windsor",
+      price: "$360/night",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=720&h=400&q=60",
+      title: "Penthouse in Richmond",
+      description:
+        "Enjoy the amazing sights of Richmond with this stunning penthouse",
+      price: "$650/night",
+    },
+    {
+      img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=720&h=400&q=60",
+      title: "1 Bedroom apartment in Southbank",
+      description:
+        "Superhost with great amenities and a fabolous shopping complex nearby",
+      price: "$220/night",
+    },
+  ],
   searchListings: [
     {
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_wbPYTxQPMcBh7SPzLFActXnP3uhifeVT_g&usqp=CAU",
