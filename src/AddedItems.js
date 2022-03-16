@@ -1,11 +1,13 @@
 import React from "react";
 import "./Home.css";
-import Navbar from "./Navbar";
+import"./AddedItems.css"
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import IconButton from '@mui/material/IconButton';
 import { ref, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
@@ -21,24 +23,36 @@ function AddedItems() {
   }, []);
 
   const addedListings = Object.entries(listings).map(([key, data]) => (
-    <Card sx={{ maxWidth: 400 }} className="card" key={key}>
+    <Card sx={{ maxWidth: 400 }} className="card">
       {" "}
-      <CardActionArea>
+      <CardActionArea >
         <CardMedia component="img" height="300" image={data.img} alt="" />
-        <CardContent>
+        <CardContent className="content">
+        <div>
         <Typography variant="body2" color="text.secondary">
             Property ID : {key}
           </Typography>
+          </div>
+          <div>
           <Typography gutterBottom variant="h5" component="div">
             {data.title}
           </Typography>
+          </div>
+          <div>
           <Typography variant="body2" color="text.secondary">
             {data.description}
           </Typography>
+          </div>
+          <div className="delete">
           <Typography variant="h6" color="text.primary">
             ${data.price}/night
           </Typography>
+          <IconButton>
+          <DeleteOutlineOutlinedIcon fontSize="medium" />
+          </IconButton>
+            </div>
         </CardContent>
+        
       </CardActionArea>
     </Card>
   ));
