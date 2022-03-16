@@ -64,7 +64,7 @@ export default function FormDialog() {
             a property title, description, rate and photo URL to start.
           </DialogContentText>
           <TextField
-            onChange={(e) => setListingId(e.target.value)}
+            onChange={(e) => setListingId(`abnb${e.target.value}`)}
             autoComplete="off"
             autoFocus
             margin="dense"

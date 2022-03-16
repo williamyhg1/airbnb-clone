@@ -6,8 +6,8 @@
 }
 
 .card {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   transition: transform 100ms ease-in;
   cursor: pointer;
   margin: 20px;

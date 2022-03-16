@@ -3,7 +3,6 @@
     flex-direction:column;
     flex: 1;
     justify-content: flex-end;
-    
     height: 200px;
     
 }
@@ -12,7 +11,5 @@
     display:flex;
     justify-content:space-between;
     align-items: center;
-    
-    
     margin-top: auto;
 }
