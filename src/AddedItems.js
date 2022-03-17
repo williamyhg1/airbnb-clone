@@ -30,7 +30,7 @@ function AddedItems() {
         <CardContent className="content">
           <div>
             <Typography variant="body2" color="text.secondary">
-              Property ID : {key}
+              Property ID&nbsp;: &nbsp;{key}
             </Typography>
           </div>
           <div>
