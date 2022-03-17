@@ -6,24 +6,18 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCtrmlR_Kc3bTPLMZQlww4PhDMp_zq3zhM",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "airbnb-clone-6ff0c.firebaseapp.com",
   databaseURL: "https://airbnb-clone-6ff0c-default-rtdb.firebaseio.com",
   projectId: "airbnb-clone-6ff0c",
   storageBucket: "airbnb-clone-6ff0c.appspot.com",
   messagingSenderId: "747650000325",
-  appId: "1:747650000325:web:071d5709c733c2f9b757ac"
+  appId: process.env.REACT_APP_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// async function getListings(db) {
-//   const listings = collection(db, 'DATA');
-//   const listingsSnapshot = await getDocs(listings);
-//   const listingsList = listingsSnapshot.docs.map(doc => doc.data());
-//   return listingsList;
-// }
 
 export default db;
