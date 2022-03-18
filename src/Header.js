@@ -1,13 +1,20 @@
 import React from "react";
+import SignUp from "./SignUp";
+import Login from "./Login";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
-import LanguageIcon from "@mui/icons-material/Language";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Avatar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import FormDialogues from "./FormDialogue";
+import FormDialogues from "./AddProperty";
 
 export default function Header() {
+  
+  
+  
+  
+  
   return (
     <div className="header">
       <Link to="/">
@@ -19,13 +26,14 @@ export default function Header() {
       </Link>
       <div className="header_center">
         <input type="text" />
+        <IconButton>
         <SearchIcon />
+        </IconButton>
       </div>
       <div className="header_right">
         <FormDialogues />
-        <LanguageIcon />
-        <ExpandMoreIcon />
-        <Avatar />
+        <SignUp />
+        <Login/>
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import "./FormDialog.css";
 import { ref, set} from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
-export default function FormDialog() {
+export default function AddProperty
+() {
   const [listingId, setListingId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,8 +49,7 @@ export default function FormDialog() {
     <div>
       <Button
         color="primary"
-        style={{ width: 160, height: 40 }}
-        variant="outlined"
+        style={{ width: 120, height: 40 }}
         onClick={handleClickOpen}
       >
         Add my home
