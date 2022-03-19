@@ -7,7 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-function SignUp() {
+function Signup() {
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -89,4 +89,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;

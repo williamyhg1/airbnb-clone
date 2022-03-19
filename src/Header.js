@@ -1,5 +1,5 @@
 import React from "react";
-import SignUp from "./SignUp";
+import Signup from "./Signup";
 import Login from "./Login";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import FormDialogues from "./AddProperty";
+import  AuthProvider  from "./contexts/AuthContext";
 
 export default function Header() {
   
@@ -16,6 +17,7 @@ export default function Header() {
   
   
   return (
+  <AuthProvider>
     <div className="header">
       <Link to="/">
         <img
@@ -32,9 +34,11 @@ export default function Header() {
       </div>
       <div className="header_right">
         <FormDialogues />
-        <SignUp />
+        <Signup />
         <Login/>
       </div>
     </div>
-  );
+    
+  </AuthProvider> );
+ 
 }

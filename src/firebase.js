@@ -20,13 +20,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: "airbnb-clone-6ff0c.firebaseapp.com",
-  databaseURL: "https://airbnb-clone-6ff0c-default-rtdb.firebaseio.com",
-  projectId: "airbnb-clone-6ff0c",
-  storageBucket: "airbnb-clone-6ff0c.appspot.com",
-  messagingSenderId: "747650000325",
-  appId: process.env.REACT_APP_ID,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET ,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MASSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -34,4 +34,5 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 
+export {auth};
 export default db;
