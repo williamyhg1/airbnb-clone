@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import FormDialogues from "./AddProperty";
-import  AuthProvider  from "./contexts/AuthContext";
 
 export default function Header() {
   
@@ -17,7 +16,7 @@ export default function Header() {
   
   
   return (
-  <AuthProvider>
+  
     <div className="header">
       <Link to="/">
         <img
@@ -38,7 +37,6 @@ export default function Header() {
         <Login/>
       </div>
     </div>
-    
-  </AuthProvider> );
+     );
  
 }

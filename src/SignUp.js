@@ -6,33 +6,66 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth }  from "./firebase";
+
+
+  
+  
+  
+
 
 function Signup() {
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState("");
-
+  const [user, setUser] = useState();
   const handleClickOpen = () => {
+    setUser();
     setOpen(true);
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    setOpen(false);
   };
 
   const handleClose = (event) => {
     event.preventDefault();
+    setUser();
+    setRegisterEmail();
+    setRegisterPassword()
+    setConfirmPassword();
     setOpen(false);
   };
 
-  //   const writeListingData = (listingNumber) => {
-  //     set(ref(db, "Listings/" + listingNumber), {
-  //       title,
-  //       description,
-  //       img: photoURL,
-  //       price,
-  //     });
-  //   };
+
+  const register = async () => {
+  try {
+    const user = await createUserWithEmailAndPassword(
+      auth,
+      registerEmail,
+      registerPassword,
+      confirmPassword
+    );
+    setUser(user);
+    console.log(user);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
   const handleRegister = (event) => {
     event.preventDefault();
-    // writeListingData(listingId);
-    setOpen(false);
+    register();
+    
+    // setOpen(false);
   };
 
   return (
@@ -41,15 +74,16 @@ function Signup() {
         Sign Up
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Sign Up with us!</DialogTitle>
+        <DialogTitle>
+      {user?"You have Signed up!":""}</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            Please enter your email address, preferred username and password to
-            register an account
+          {user? ("") : ("Please enter your email address and password toregister an account")}
+            
           </DialogContentText>
           <TextField
-            //   onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setRegisterEmail(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -57,19 +91,10 @@ function Signup() {
             label="Email Address"
             fullWidth
             variant="outlined"
+            autocomplete="off"
           />
           <TextField
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="username"
-            label="Username"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            //   onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setRegisterPassword(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -77,12 +102,29 @@ function Signup() {
             label="Password"
             fullWidth
             variant="outlined"
+            type="password"
+            autocomplete="off"
+          />
+          <TextField
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="off"
+            autoFocus
+            margin="dense"
+            id="confirm-password"
+            label="Confirm Password"
+            fullWidth
+            variant="outlined"
+            type="password"
+            autocomplete="off"
           />
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleRegister}>Register</Button>
+        {user?(""):(<Button onClick={handleRegister}>Sign up</Button>)}
+        {user?(<Button onClick={handleClose}>Close</Button>):(<Button onClick={handleCancel}>Cancel</Button>)}
+        
+          
+          
         </DialogActions>
       </Dialog>
     </div>
