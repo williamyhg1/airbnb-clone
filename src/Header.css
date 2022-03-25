@@ -11,8 +11,9 @@
 
 .header_icon {
   object-fit: contain;
-  height: 50px;
-  margin: 20px;
+  height: 80px;
+  margin:10px;
+  margin-left: 50px;
 }
 
 .header_center {

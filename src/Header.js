@@ -11,11 +11,12 @@ import FormDialogues from "./AddProperty";
 
 export default function Header() {
   return (
+  
     <div className="header">
       <Link to="/">
         <img
           className="header_icon"
-          src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg"
+          src="https://pbs.twimg.com/media/Bsure9HIEAAZ48G?format=png&name=small"
           alt=""
         />
       </Link>
