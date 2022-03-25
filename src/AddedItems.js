@@ -7,7 +7,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import IconButton from "@mui/material/IconButton";
 import { ref, onValue, remove } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
@@ -47,13 +46,13 @@ function AddedItems() {
             <Typography variant="h6" color="text.primary">
               ${data.price}/night
             </Typography>
-            <IconButton
+
+            <DeleteOutlineOutlinedIcon
+              fontSize="medium"
               onClick={() => {
                 remove(ref(db, "Listings/" + key));
               }}
-            >
-              <DeleteOutlineOutlinedIcon fontSize="medium" />
-            </IconButton>
+            />
           </div>
         </CardContent>
       </CardActionArea>
