@@ -10,13 +10,7 @@ import { Link } from "react-router-dom";
 import FormDialogues from "./AddProperty";
 
 export default function Header() {
-  
-  
-  
-  
-  
   return (
-  
     <div className="header">
       <Link to="/">
         <img

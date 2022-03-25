@@ -15,9 +15,6 @@ import {
 import { auth } from "./firebase";
 
 function Signup() {
-  // const [registerEmail, setRegisterEmail] = useState("");
-  // const [registerPassword, setRegisterPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -25,14 +22,12 @@ function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
+
   const handleClickOpen = () => {
     setUser();
+    setErrorMessage();
+    setPasswordMismatched();
     setOpen(true);
-  };
-
-  const handleCancel = (event) => {
-    event.preventDefault();
-    setOpen(false);
   };
 
   const handleClose = (event) => {
@@ -48,23 +43,26 @@ function Signup() {
       password: passwordRef.current?.value,
       passwordConfirm: passwordConfirmRef.current?.value,
     };
-    console.log(JSON.stringify(data));
-    data.password === data.passwordConfirm
-      ? createUserWithEmailAndPassword(auth, data.email, data.password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            setUser(user);
-            console.log(JSON.stringify(user));
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            setErrorMessage(errorMessage);
-          })
-      : setPasswordMismatched("Passwords mismatched!");
+    console.log(JSON.stringify(data.email.includes("@")));
 
-    // setOpen(false);
+    data.email.includes("@" && ".com")
+      ? data.password && data.passwordConfirm
+        ? data.password === data.passwordConfirm
+          ? createUserWithEmailAndPassword(auth, data.email, data.password)
+              .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                setUser(user);
+                console.log(JSON.stringify(user));
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorMessage);
+              })
+          : setPasswordMismatched("Passwords mismatched!")
+        : setErrorMessage("Password is requried")
+      : setErrorMessage("Invalid email address");
   };
 
   return (
@@ -97,6 +95,7 @@ function Signup() {
             label="Email Address"
             fullWidth
             variant="outlined"
+            required
           />
           <TextField
             // onChange={(e) => setRegisterPassword(e.target.value)}
@@ -109,6 +108,7 @@ function Signup() {
             fullWidth
             variant="outlined"
             type="password"
+            required
           />
           <TextField
             // onChange={(e) => setConfirmPassword(e.target.value)}
@@ -121,6 +121,7 @@ function Signup() {
             fullWidth
             variant="outlined"
             type="password"
+            required
           />
         </DialogContent>
 
@@ -129,7 +130,7 @@ function Signup() {
           {user ? (
             <Button onClick={handleClose}>Close</Button>
           ) : (
-            <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleClose}>Cancel</Button>
           )}
         </DialogActions>
       </Dialog>
