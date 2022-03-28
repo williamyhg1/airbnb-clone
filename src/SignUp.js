@@ -18,15 +18,13 @@ function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const [passwordMismatched, setPasswordMismatched] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
 
   const handleClickOpen = () => {
     setUser();
     setErrorMessage();
-    setPasswordMismatched();
     setOpen(true);
   };
 
@@ -45,24 +43,47 @@ function Signup() {
     };
     console.log(JSON.stringify(data.email.includes("@")));
 
-    data.email.includes("@" && ".com")
-      ? data.password && data.passwordConfirm
-        ? data.password === data.passwordConfirm
-          ? createUserWithEmailAndPassword(auth, data.email, data.password)
-              .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                setUser(user);
-                console.log(JSON.stringify(user));
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setErrorMessage(errorMessage);
-              })
-          : setPasswordMismatched("Passwords mismatched!")
-        : setErrorMessage("Password is requried")
-      : setErrorMessage("Invalid email address");
+    // data.email.includes("@" && ".com")
+    //   ? data.password && data.passwordConfirm
+    //     ? data.password === data.passwordConfirm
+    //       ? createUserWithEmailAndPassword(auth, data.email, data.password)
+    //           .then((userCredential) => {
+    //             // Signed in
+    //             const user = userCredential.user;
+    //             setUser(user);
+    //             console.log(JSON.stringify(user));
+    //           })
+    //           .catch((error) => {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             setErrorMessage(errorMessage);
+    //           })
+    //       : setPasswordMismatched("Passwords mismatched!")
+    //     : setErrorMessage("Password is requried")
+    //   : setErrorMessage("Invalid email address");
+    if (!data.email) {
+      setErrorMessage("Email address is required");
+    } else if (!data.email.includes("@" && ".com")) {
+      setErrorMessage("Invalid email address");
+    } else if (!data.password) {
+      setErrorMessage("Password is requried");
+    } else if (data.password && !data.passwordConfirm) {
+      setErrorMessage("Please confirm your password");
+    } else if (data.password !== data.passwordConfirm) {
+      setErrorMessage("Passwords mismatched!");
+    } else {
+      createUserWithEmailAndPassword(auth, data.email, data.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          setUser(user);
+          console.log(JSON.stringify(user));
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
+    }
   };
 
   return (
@@ -71,22 +92,15 @@ function Signup() {
         Sign Up
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
-          {user
-            ? "You have signed up!"
-            : passwordMismatched
-            ? passwordMismatched
-            : errorMessage}
-        </DialogTitle>
+        <DialogTitle>{user ? "You have signed up!" : errorMessage}</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
             {user
               ? ""
-              : "Please enter your email address and password toregister an account"}
+              : "Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
-            // onChange={(e) => setRegisterEmail(e.target.value)}
             inputRef={emailRef}
             autoComplete="off"
             autoFocus
@@ -98,7 +112,6 @@ function Signup() {
             required
           />
           <TextField
-            // onChange={(e) => setRegisterPassword(e.target.value)}
             inputRef={passwordRef}
             autoComplete="off"
             autoFocus
@@ -111,7 +124,6 @@ function Signup() {
             required
           />
           <TextField
-            // onChange={(e) => setConfirmPassword(e.target.value)}
             inputRef={passwordConfirmRef}
             autoComplete="off"
             autoFocus
