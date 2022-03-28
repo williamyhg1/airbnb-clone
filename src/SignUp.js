@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -41,26 +41,7 @@ function Signup() {
       password: passwordRef.current?.value,
       passwordConfirm: passwordConfirmRef.current?.value,
     };
-    console.log(JSON.stringify(data.email.includes("@")));
 
-    // data.email.includes("@" && ".com")
-    //   ? data.password && data.passwordConfirm
-    //     ? data.password === data.passwordConfirm
-    //       ? createUserWithEmailAndPassword(auth, data.email, data.password)
-    //           .then((userCredential) => {
-    //             // Signed in
-    //             const user = userCredential.user;
-    //             setUser(user);
-    //             console.log(JSON.stringify(user));
-    //           })
-    //           .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             setErrorMessage(errorMessage);
-    //           })
-    //       : setPasswordMismatched("Passwords mismatched!")
-    //     : setErrorMessage("Password is requried")
-    //   : setErrorMessage("Invalid email address");
     if (!data.email) {
       setErrorMessage("Email address is required");
     } else if (!data.email.includes("@" && ".com")) {
@@ -70,7 +51,7 @@ function Signup() {
     } else if (data.password && !data.passwordConfirm) {
       setErrorMessage("Please confirm your password");
     } else if (data.password !== data.passwordConfirm) {
-      setErrorMessage("Passwords mismatched!");
+      setErrorMessage("Passwords mismatched");
     } else {
       createUserWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential) => {
