@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef} from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -18,6 +18,9 @@ function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const [email, setEmail] =useState();
+  const [password, setPassword] = useState();
+  const [passwordConfirm, setPasswordConfirm] = useState();
   const [errorMessage, setErrorMessage] = useState(false);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
@@ -37,30 +40,12 @@ function Signup() {
     event.preventDefault();
 
     const data = {
-      email: emailRef.current?.value,
-      password: passwordRef.current?.value,
+      email:emailRef.current?.value,
+      password:passwordRef.current?.value,
       passwordConfirm: passwordConfirmRef.current?.value,
     };
-    console.log(JSON.stringify(data.email.includes("@")));
-
-    // data.email.includes("@" && ".com")
-    //   ? data.password && data.passwordConfirm
-    //     ? data.password === data.passwordConfirm
-    //       ? createUserWithEmailAndPassword(auth, data.email, data.password)
-    //           .then((userCredential) => {
-    //             // Signed in
-    //             const user = userCredential.user;
-    //             setUser(user);
-    //             console.log(JSON.stringify(user));
-    //           })
-    //           .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             setErrorMessage(errorMessage);
-    //           })
-    //       : setPasswordMismatched("Passwords mismatched!")
-    //     : setErrorMessage("Password is requried")
-    //   : setErrorMessage("Invalid email address");
+console.log(data.email)
+  
     if (!data.email) {
       setErrorMessage("Email address is required");
     } else if (!data.email.includes("@" && ".com")) {
@@ -77,13 +62,17 @@ function Signup() {
           // Signed in
           const user = userCredential.user;
           setUser(user);
-          console.log(JSON.stringify(user));
+          setEmail("");
+          setPassword("");
+          setPasswordConfirm("");
         })
         .catch((error) => {
           const errorMessage = error.message;
           setErrorMessage(errorMessage);
         });
     }
+          
+
   };
 
   return (
@@ -101,6 +90,7 @@ function Signup() {
               : "Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
+            // onChange={(e) => setEmail(e.target.value)}
             inputRef={emailRef}
             autoComplete="off"
             autoFocus
@@ -110,8 +100,11 @@ function Signup() {
             fullWidth
             variant="outlined"
             required
+            value={email}
+            
           />
           <TextField
+            // onChange={(e) => setPassword(e.target.value)}
             inputRef={passwordRef}
             autoComplete="off"
             autoFocus
@@ -122,8 +115,10 @@ function Signup() {
             variant="outlined"
             type="password"
             required
+            value={password}
           />
           <TextField
+            // onChange={(e) => setPasswordConfirm(e.target.value)}
             inputRef={passwordConfirmRef}
             autoComplete="off"
             autoFocus
@@ -134,6 +129,8 @@ function Signup() {
             variant="outlined"
             type="password"
             required
+            value={passwordConfirm}
+            
           />
         </DialogContent>
 
