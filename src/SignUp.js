@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -15,13 +15,10 @@ import {
 import { auth } from "./firebase";
 
 function Signup() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const [email, setEmail] =useState();
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
 
@@ -38,14 +35,12 @@ function Signup() {
 
   const handleRegister = (event) => {
     event.preventDefault();
-
     const data = {
-      email:emailRef.current?.value,
-      password:passwordRef.current?.value,
-      passwordConfirm: passwordConfirmRef.current?.value,
+      email,
+      password,
+      passwordConfirm,
     };
-console.log(data.email)
-  
+
     if (!data.email) {
       setErrorMessage("Email address is required");
     } else if (!data.email.includes("@" && ".com")) {
@@ -71,8 +66,6 @@ console.log(data.email)
           setErrorMessage(errorMessage);
         });
     }
-          
-
   };
 
   return (
@@ -90,8 +83,7 @@ console.log(data.email)
               : "Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
-            // onChange={(e) => setEmail(e.target.value)}
-            inputRef={emailRef}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -101,11 +93,9 @@ console.log(data.email)
             variant="outlined"
             required
             value={email}
-            
           />
           <TextField
-            // onChange={(e) => setPassword(e.target.value)}
-            inputRef={passwordRef}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -118,8 +108,7 @@ console.log(data.email)
             value={password}
           />
           <TextField
-            // onChange={(e) => setPasswordConfirm(e.target.value)}
-            inputRef={passwordConfirmRef}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -130,7 +119,6 @@ console.log(data.email)
             type="password"
             required
             value={passwordConfirm}
-            
           />
         </DialogContent>
 
