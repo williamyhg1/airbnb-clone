@@ -15,10 +15,10 @@ import {
 import { auth } from "./firebase";
 
 function Signup() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [passwordConfirm, setPasswordConfirm] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
 
@@ -35,11 +35,10 @@ function Signup() {
 
   const handleRegister = (event) => {
     event.preventDefault();
-
     const data = {
-      email: emailRef.current?.value,
-      password: passwordRef.current?.value,
-      passwordConfirm: passwordConfirmRef.current?.value,
+      email,
+      password,
+      passwordConfirm,
     };
 
     if (!data.email) {
@@ -58,7 +57,9 @@ function Signup() {
           // Signed in
           const user = userCredential.user;
           setUser(user);
-          console.log(JSON.stringify(user));
+          setEmail("");
+          setPassword("");
+          setPasswordConfirm("");
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -82,7 +83,7 @@ function Signup() {
               : "Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
-            inputRef={emailRef}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -91,9 +92,10 @@ function Signup() {
             fullWidth
             variant="outlined"
             required
+            value={email}
           />
           <TextField
-            inputRef={passwordRef}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -103,9 +105,10 @@ function Signup() {
             variant="outlined"
             type="password"
             required
+            value={password}
           />
           <TextField
-            inputRef={passwordConfirmRef}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -115,6 +118,7 @@ function Signup() {
             variant="outlined"
             type="password"
             required
+            value={passwordConfirm}
           />
         </DialogContent>
 
