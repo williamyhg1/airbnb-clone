@@ -47,6 +47,8 @@ function Signup() {
       setErrorMessage("Invalid email address");
     } else if (!data.password) {
       setErrorMessage("Password is requried");
+    } else if (data.password.length < 7) {
+      setErrorMessage("Password is too short");
     } else if (data.password && !data.passwordConfirm) {
       setErrorMessage("Please confirm your password");
     } else if (data.password !== data.passwordConfirm) {
