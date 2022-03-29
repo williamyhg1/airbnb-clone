@@ -17,11 +17,7 @@ export default function Header() {
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
       setUser(user);
-
-      // ...
     }
   });
 
@@ -41,9 +37,10 @@ export default function Header() {
         </IconButton>
       </div>
       <div className="header_right">
-        {user ? <Signout /> : <Signin />}
-        {user ? <AddProperty /> : ""}
+        <Signin user={user} />
         <Signup user={user} />
+        <AddProperty user={user} />
+        <Signout user={user} />
       </div>
     </div>
   );

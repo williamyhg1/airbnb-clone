@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
-function Signin() {
+function Signin(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -59,11 +59,17 @@ function Signin() {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Sign in
-      </Button>
+      {user || props.user ? (
+        ""
+      ) : (
+        <Button color="primary" onClick={handleClickOpen}>
+          Sign in
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{user ? "You have signed in!" : errorMessage}</DialogTitle>
+        <DialogTitle style={{ width: 400 }} className="message">
+          {user ? "You have signed in!" : errorMessage}
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
@@ -73,31 +79,38 @@ function Signin() {
               ? ""
               : "Please enter your email address and password to sign in"}
           </DialogContentText>
-          <TextField
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="email"
-            label="Email Address"
-            fullWidth
-            variant="outlined"
-            required
-            value={user ? "" : email}
-          />
-          <TextField
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="password"
-            label="Password"
-            fullWidth
-            variant="outlined"
-            type="password"
-            required
-            value={user ? "" : password}
-          />
+
+          {user ? (
+            ""
+          ) : (
+            <>
+              <TextField
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="email"
+                label="Email Address"
+                fullWidth
+                variant="outlined"
+                required
+                value={user ? "" : email}
+              />
+              <TextField
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="password"
+                label="Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                required
+                value={user ? "" : password}
+              />
+            </>
+          )}
         </DialogContent>
 
         <DialogActions>

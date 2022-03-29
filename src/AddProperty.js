@@ -10,7 +10,7 @@ import { ref, set } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
-export default function AddProperty() {
+export default function AddProperty(props) {
   const [listingId, setListingId] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -69,13 +69,17 @@ export default function AddProperty() {
 
   return (
     <div>
-      <Button
-        color="primary"
-        style={{ width: 120, height: 40 }}
-        onClick={handleClickOpen}
-      >
-        Add my home
-      </Button>
+      {!props.user ? (
+        ""
+      ) : (
+        <Button
+          color="primary"
+          style={{ width: 120, height: 40 }}
+          onClick={handleClickOpen}
+        >
+          Add my home
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{errorMessage ? errorMessage : "Add a home"}</DialogTitle>
 

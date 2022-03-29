@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
-function Signout() {
+function Signout(props) {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
   const [message, setMessage] = useState();
@@ -43,9 +42,13 @@ function Signout() {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Sign out
-      </Button>
+      {!props.user ? (
+        ""
+      ) : (
+        <Button color="primary" onClick={handleClickOpen}>
+          Sign out
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }}>
           {user ? "You have signed in!" : message}
