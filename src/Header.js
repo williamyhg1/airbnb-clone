@@ -1,6 +1,6 @@
 import React from "react";
 import Signup from "./Signup";
-import Login from "./Login";
+import Signin from "./Signin";
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { Avatar } from "@mui/material";
@@ -29,7 +29,7 @@ export default function Header() {
       <div className="header_right">
         <FormDialogues />
         <Signup />
-        <Login/>
+        <Signin/>
       </div>
     </div>
      );

@@ -95,7 +95,7 @@ function Signup() {
             fullWidth
             variant="outlined"
             required
-            value={email}
+            value={user?"":email}
           />
           <TextField
             onChange={(e) => setPassword(e.target.value)}
@@ -108,7 +108,7 @@ function Signup() {
             variant="outlined"
             type="password"
             required
-            value={password}
+            value={user?"":password}
           />
           <TextField
             onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -121,7 +121,7 @@ function Signup() {
             variant="outlined"
             type="password"
             required
-            value={passwordConfirm}
+            value={user?"":passwordConfirm}
           />
         </DialogContent>
 

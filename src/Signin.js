@@ -14,7 +14,7 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 
-function Login() {
+function Signin() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -55,9 +55,11 @@ function Login() {
           setUser(user);
           setEmail();
           setPassword();
+          console.log(JSON.stringify(user.email))
         })
         .catch((error) => {
           setErrorMessage("Incorrect account details");
+          console.log(error)
         });
     }
   };
@@ -68,13 +70,13 @@ function Login() {
         Sign in
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{user ? "You have logged in!" : errorMessage}</DialogTitle>
+        <DialogTitle>{user ? "You have signed in!" : errorMessage}</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
             {user
               ? ""
-              : errorMessage? "":"Please enter your email address and password to Sign in"}
+              : errorMessage? "":"Please enter your email address and password to sign in"}
           </DialogContentText>
           <TextField
             onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +88,7 @@ function Login() {
             fullWidth
             variant="outlined"
             required
-            value={email}
+            value={user?"":email}
           />
           <TextField
             onChange={(e) => setPassword(e.target.value)}
@@ -99,7 +101,7 @@ function Login() {
             variant="outlined"
             type="password"
             required
-            value={password}
+            value={user?"":password}
           />
           
         </DialogContent>
@@ -117,4 +119,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signin;
