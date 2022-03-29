@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -55,11 +55,9 @@ function Signin() {
           setUser(user);
           setEmail();
           setPassword();
-          console.log(JSON.stringify(user.email))
         })
         .catch((error) => {
           setErrorMessage("Incorrect account details");
-          console.log(error)
         });
     }
   };
