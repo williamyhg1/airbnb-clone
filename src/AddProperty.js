@@ -6,20 +6,34 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ref, set} from "firebase/database";
+import { ref, set } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
-export default function AddProperty
-() {
-  const [listingId, setListingId] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
+export default function AddProperty() {
+  const [listingId, setListingId] = useState();
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState();
+  const [photoURL, setPhotoURL] = useState();
   const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState();
+  const data = {
+      
+    title,
+    listingId,  
+    description,
+      "img": photoURL,
+      price,
+  }
 
   const handleClickOpen = () => {
+    setListingId();
+    setTitle();
+    setDescription();
+    setPrice();
+    setPhotoURL();
+    setErrorMessage();
     setOpen(true);
   };
 
@@ -29,20 +43,28 @@ export default function AddProperty
   };
 
   const writeListingData = (listingNumber) => {
-    set(ref(db, "Listings/" + listingNumber), {
-      title,
-      description,
-      img: photoURL,
-      price,
-    });
+    set(ref(db, "Listings/" + listingNumber), data);
   };
 
-  
-
+  // Fix empty entry, validate entry
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(typeof parseInt(data.price))
+    if (!data.listingId){
+      setErrorMessage("Property ID is required")
+    } else if(!data.title) {
+      setErrorMessage("Property title is required");
+    } else if (!data.description) {
+      setErrorMessage("Property description is required");
+    } else if (!data.price) {
+      setErrorMessage("Price is required");
+    } else if (parseInt(data.price) < 1) {
+      setErrorMessage("Price must be over $0");
+    } else if (!data.img) {
+      setErrorMessage("Property image is required");
+    } else {
     writeListingData(listingId);
-    setOpen(false);
+    setOpen(false)};
   };
 
   return (
@@ -55,15 +77,17 @@ export default function AddProperty
         Add my home
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add a home</DialogTitle>
+        <DialogTitle>
+        {errorMessage ? errorMessage:("Add a home")}
+        
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            Add or update your home with your customised property ID. Enter
-            a property title, description, rate and photo URL to start.
+            {errorMessage ? "":("Add or update your home with your customised property ID. Enter a property title, description, rate and photo URL to start.")}
           </DialogContentText>
           <TextField
-            onChange={(e) => setListingId(`abnb${e.target.value}`)}
+            onChange={(e) => setListingId(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -71,6 +95,7 @@ export default function AddProperty
             label="Property ID"
             fullWidth
             variant="outlined"
+            required
           />
           <TextField
             onChange={(e) => setTitle(e.target.value)}
@@ -81,6 +106,7 @@ export default function AddProperty
             label="Property Title"
             fullWidth
             variant="outlined"
+            required
           />
           <TextField
             onChange={(e) => setDescription(e.target.value)}
@@ -91,6 +117,7 @@ export default function AddProperty
             label="Description"
             fullWidth
             variant="outlined"
+            required
           />
           <TextField
             onChange={(e) => setPrice(e.target.value)}
@@ -101,6 +128,9 @@ export default function AddProperty
             label="Price (AUD)"
             fullWidth
             variant="outlined"
+            required
+            type="number"
+            InputProps={{ inputProps: { min: 0} }}
           />
           <TextField
             onChange={(e) => setPhotoURL(e.target.value)}
@@ -111,6 +141,7 @@ export default function AddProperty
             label="Photo URL"
             fullWidth
             variant="outlined"
+            required
           />
         </DialogContent>
 
