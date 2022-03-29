@@ -19,13 +19,12 @@ export default function AddProperty() {
   const [open, setOpen] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState();
   const data = {
-      
     title,
-    listingId,  
+    listingId,
     description,
-      "img": photoURL,
-      price,
-  }
+    img: photoURL,
+    price,
+  };
 
   const handleClickOpen = () => {
     setListingId();
@@ -49,10 +48,10 @@ export default function AddProperty() {
   // Fix empty entry, validate entry
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(typeof parseInt(data.price))
-    if (!data.listingId){
-      setErrorMessage("Property ID is required")
-    } else if(!data.title) {
+    console.log(typeof parseInt(data.price));
+    if (!data.listingId) {
+      setErrorMessage("Property ID is required");
+    } else if (!data.title) {
       setErrorMessage("Property title is required");
     } else if (!data.description) {
       setErrorMessage("Property description is required");
@@ -63,8 +62,9 @@ export default function AddProperty() {
     } else if (!data.img) {
       setErrorMessage("Property image is required");
     } else {
-    writeListingData(listingId);
-    setOpen(false)};
+      writeListingData(listingId);
+      setOpen(false);
+    }
   };
 
   return (
@@ -77,14 +77,13 @@ export default function AddProperty() {
         Add my home
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>
-        {errorMessage ? errorMessage:("Add a home")}
-        
-        </DialogTitle>
+        <DialogTitle>{errorMessage ? errorMessage : "Add a home"}</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            {errorMessage ? "":("Add or update your home with your customised property ID. Enter a property title, description, rate and photo URL to start.")}
+            {errorMessage
+              ? ""
+              : "Add or update your home with your customised property ID. Enter a property title, description, rate and photo URL to start."}
           </DialogContentText>
           <TextField
             onChange={(e) => setListingId(e.target.value)}
@@ -130,7 +129,7 @@ export default function AddProperty() {
             variant="outlined"
             required
             type="number"
-            InputProps={{ inputProps: { min: 0} }}
+            InputProps={{ inputProps: { min: 0 } }}
           />
           <TextField
             onChange={(e) => setPhotoURL(e.target.value)}

@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import Signup from "./Signup";
+import React, { useState } from "react";
+import Signup, {Signedup} from "./Signup";
 import Signin from "./Signin";
 import Signout from "./Signout";
 import "./Header.css";
@@ -14,15 +14,15 @@ import { onAuthStateChanged } from "firebase/auth";
 
 export default function Header() {
   const [user, setUser] = useState();
-  
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      setUser(user)
-      
-      const uid = user.uid
-      console.log(uid)
+      setUser(user);
+      console.log(JSON.stringify(user))
+      const uid = user.uid;
+      console.log(uid);
       // ...
     } else {
       // User is signed out
@@ -46,8 +46,9 @@ export default function Header() {
         </IconButton>
       </div>
       <div className="header_right">
-        {!user?<Signin />:<Signout/>}
-        {!user?<Signup />:<AddProperty />}
+        {user? <Signout />:<Signin />  }
+        {user?<AddProperty />: ""}
+        <Signup/>
       </div>
     </div>
   );

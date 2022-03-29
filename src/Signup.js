@@ -6,12 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
 function Signup() {
@@ -23,7 +18,6 @@ function Signup() {
   const [user, setUser] = useState();
 
   const handleClickOpen = () => {
-
     setUser();
     setErrorMessage();
     setOpen(true);
@@ -73,17 +67,22 @@ function Signup() {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
-        Sign Up
-      </Button>
+      {user ? (
+        ""
+      ) : (
+        <Button color="primary" onClick={handleClickOpen}>
+          Sign up
+        </Button>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{user ? "You have signed up!" : errorMessage}</DialogTitle>
-
         <DialogContent>
           <DialogContentText>
             {user
               ? ""
-              : errorMessage? "":"Please enter your email address and password to register an account"}
+              : errorMessage
+              ? ""
+              : "Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
             onChange={(e) => setEmail(e.target.value)}
@@ -95,7 +94,7 @@ function Signup() {
             fullWidth
             variant="outlined"
             required
-            value={user?"":email}
+            value={user ? "" : email}
           />
           <TextField
             onChange={(e) => setPassword(e.target.value)}
@@ -108,7 +107,7 @@ function Signup() {
             variant="outlined"
             type="password"
             required
-            value={user?"":password}
+            value={user ? "" : password}
           />
           <TextField
             onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -121,7 +120,7 @@ function Signup() {
             variant="outlined"
             type="password"
             required
-            value={user?"":passwordConfirm}
+            value={user ? "" : passwordConfirm}
           />
         </DialogContent>
 

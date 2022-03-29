@@ -74,7 +74,9 @@ function Signin() {
           <DialogContentText>
             {user
               ? ""
-              : errorMessage? "":"Please enter your email address and password to sign in"}
+              : errorMessage
+              ? ""
+              : "Please enter your email address and password to sign in"}
           </DialogContentText>
           <TextField
             onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +88,7 @@ function Signin() {
             fullWidth
             variant="outlined"
             required
-            value={user?"":email}
+            value={user ? "" : email}
           />
           <TextField
             onChange={(e) => setPassword(e.target.value)}
@@ -99,9 +101,8 @@ function Signin() {
             variant="outlined"
             type="password"
             required
-            value={user?"":password}
+            value={user ? "" : password}
           />
-          
         </DialogContent>
 
         <DialogActions>

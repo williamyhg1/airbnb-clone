@@ -6,7 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import {signOut} from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
 function Signout() {
@@ -16,7 +16,6 @@ function Signout() {
 
   const handleClickOpen = () => {
     setUser();
- 
     setOpen(true);
   };
 
@@ -33,14 +32,14 @@ function Signout() {
 
   const handleSignout = (event) => {
     event.preventDefault();
-    signOut(auth).then(() => {
-        setMessage("Sign out successful")
-      }).catch((error) => {
-        setMessage("An error happened")
+    signOut(auth)
+      .then(() => {
+        setMessage("Sign out successful");
+      })
+      .catch((error) => {
+        setMessage("An error happened");
       });
-    };
-
-    
+  };
 
   return (
     <div>
@@ -52,11 +51,8 @@ function Signout() {
 
         <DialogContent>
           <DialogContentText>
-            {user
-              ? ""
-              : message? "":"Are you sure you want to sign out?"}
+            {user ? "" : message ? "" : "Are you sure you want to sign out?"}
           </DialogContentText>
-          
         </DialogContent>
 
         <DialogActions>
