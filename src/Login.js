@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,12 +6,24 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth } from "./firebase";
 
 function Login() {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState();
 
   const handleClickOpen = () => {
+    setUser();
+    setErrorMessage();
     setOpen(true);
   };
 
@@ -20,42 +32,64 @@ function Login() {
     setOpen(false);
   };
 
-  //   const writeListingData = (listingNumber) => {
-  //     set(ref(db, "Listings/" + listingNumber), {
-  //       title,
-  //       description,
-  //       img: photoURL,
-  //       price,
-  //     });
-  //   };
-
-  const handleSubmit = (event) => {
+  const handleRegister = (event) => {
     event.preventDefault();
-    // writeListingData(listingId);
-    setOpen(false);
+    const data = {
+      email,
+      password,
+    };
+
+    if (!data.email) {
+      setErrorMessage("Email address is required");
+    } else if (!data.email.includes("@" && ".com")) {
+      setErrorMessage("Invalid email address");
+    } else if (!data.password) {
+      setErrorMessage("Password is requried");
+    } else if (data.password.length < 7) {
+      setErrorMessage("Password is too short");
+    } else {
+      signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          setUser(user);
+          setEmail();
+          setPassword();
+        })
+        .catch((error) => {
+          setErrorMessage("Incorrect account details");
+        });
+    }
   };
 
   return (
     <div>
       <Button color="primary" onClick={handleClickOpen}>
-        Login
+        Sign in
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Please enter your username and password to login</DialogTitle>
+        <DialogTitle>{user ? "You have logged in!" : errorMessage}</DialogTitle>
 
         <DialogContent>
+          <DialogContentText>
+            {user
+              ? ""
+              : errorMessage? "":"Please enter your email address and password to Sign in"}
+          </DialogContentText>
           <TextField
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
-            id="username"
-            label="Username"
+            id="email"
+            label="Email Address"
             fullWidth
             variant="outlined"
+            required
+            value={email}
           />
           <TextField
-            //   onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
             autoFocus
             margin="dense"
@@ -63,12 +97,20 @@ function Login() {
             label="Password"
             fullWidth
             variant="outlined"
+            type="password"
+            required
+            value={password}
           />
+          
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          {user ? "" : <Button onClick={handleRegister}>Sign in</Button>}
+          {user ? (
+            <Button onClick={handleClose}>Close</Button>
+          ) : (
+            <Button onClick={handleClose}>Cancel</Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>
