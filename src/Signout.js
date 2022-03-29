@@ -47,7 +47,9 @@ function Signout() {
         Sign out
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{user ? "You have signed in!" : message}</DialogTitle>
+        <DialogTitle style={{ width: 400 }}>
+          {user ? "You have signed in!" : message}
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText>

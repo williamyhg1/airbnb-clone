@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
 
-function Signup() {
+function Signup(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordConfirm, setPasswordConfirm] = useState();
@@ -65,9 +65,16 @@ function Signup() {
     }
   };
 
+  const handleEnterPress = (event) => {
+    console.log(JSON.stringify(event.key));
+    // if (event.key === "Enter"){
+    //   handleRegister();
+    // }
+  };
+
   return (
     <div>
-      {user ? (
+      {user || props.user ? (
         ""
       ) : (
         <Button color="primary" onClick={handleClickOpen}>
@@ -75,7 +82,9 @@ function Signup() {
         </Button>
       )}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{user ? "You have signed up!" : errorMessage}</DialogTitle>
+        <DialogTitle style={{ width: 400 }}>
+          {user ? "You have signed up!" : errorMessage}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             {user
@@ -84,44 +93,54 @@ function Signup() {
               ? ""
               : "Please enter your email address and password to register an account"}
           </DialogContentText>
-          <TextField
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="email"
-            label="Email Address"
-            fullWidth
-            variant="outlined"
-            required
-            value={user ? "" : email}
-          />
-          <TextField
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="password"
-            label="Password"
-            fullWidth
-            variant="outlined"
-            type="password"
-            required
-            value={user ? "" : password}
-          />
-          <TextField
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            autoComplete="off"
-            autoFocus
-            margin="dense"
-            id="confirm-password"
-            label="Confirm Password"
-            fullWidth
-            variant="outlined"
-            type="password"
-            required
-            value={user ? "" : passwordConfirm}
-          />
+
+          {user ? (
+            ""
+          ) : (
+            <div>
+              <TextField
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="email"
+                label="Email Address"
+                fullWidth
+                variant="outlined"
+                required
+                value={user ? "" : email}
+                onKeyPress={handleEnterPress}
+              />
+              <TextField
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="password"
+                label="Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                required
+                value={user ? "" : password}
+                onKeyPress={handleEnterPress}
+              />
+              <TextField
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="confirm-password"
+                label="Confirm Password"
+                fullWidth
+                variant="outlined"
+                type="password"
+                required
+                value={user ? "" : passwordConfirm}
+                onKeyPress={handleEnterPress}
+              />
+            </div>
+          )}
         </DialogContent>
 
         <DialogActions>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Signup, {Signedup} from "./Signup";
+import Signup, { Signedup } from "./Signup";
 import Signin from "./Signin";
 import Signout from "./Signout";
 import "./Header.css";
@@ -20,12 +20,7 @@ export default function Header() {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       setUser(user);
-      console.log(JSON.stringify(user))
-      const uid = user.uid;
-      console.log(uid);
-      // ...
-    } else {
-      // User is signed out
+
       // ...
     }
   });
@@ -46,9 +41,9 @@ export default function Header() {
         </IconButton>
       </div>
       <div className="header_right">
-        {user? <Signout />:<Signin />  }
-        {user?<AddProperty />: ""}
-        <Signup/>
+        {user ? <Signout /> : <Signin />}
+        {user ? <AddProperty /> : ""}
+        <Signup user={user} />
       </div>
     </div>
   );
