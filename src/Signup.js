@@ -23,6 +23,7 @@ function Signup() {
   const [user, setUser] = useState();
 
   const handleClickOpen = () => {
+
     setUser();
     setErrorMessage();
     setOpen(true);
@@ -59,9 +60,9 @@ function Signup() {
           // Signed in
           const user = userCredential.user;
           setUser(user);
-          setEmail("");
-          setPassword("");
-          setPasswordConfirm("");
+          setEmail();
+          setPassword();
+          setPasswordConfirm();
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -82,7 +83,7 @@ function Signup() {
           <DialogContentText>
             {user
               ? ""
-              : "Please enter your email address and password to register an account"}
+              : errorMessage? "":"Please enter your email address and password to register an account"}
           </DialogContentText>
           <TextField
             onChange={(e) => setEmail(e.target.value)}
