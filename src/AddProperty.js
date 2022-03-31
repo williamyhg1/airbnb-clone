@@ -6,12 +6,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ref, set } from "firebase/database";
+import { ref, set, onValue } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
 
 export default function AddProperty(props) {
   const [listingId, setListingId] = useState();
+  const [listedItem, setListedItem] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
@@ -42,15 +43,22 @@ export default function AddProperty(props) {
   };
 
   const writeListingData = (listingNumber) => {
+
+
+
     set(ref(db, "Listings/" + listingNumber), data);
   };
 
   // Fix empty entry, validate entry
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(typeof parseInt(data.price));
+
+    
+    
     if (!data.listingId) {
       setErrorMessage("Property ID is required");
+    } else if (listedItem.includes(data.listingId)){
+      setErrorMessage("Property ID has exhisted");
     } else if (!data.title) {
       setErrorMessage("Property title is required");
     } else if (!data.description) {
@@ -66,6 +74,20 @@ export default function AddProperty(props) {
       setOpen(false);
     }
   };
+
+
+useEffect(() => {
+const ListingsRef = ref(db,"Listings");
+      onValue(ListingsRef, (snapshot) => {
+        console.log(snapshot.val())
+      const data = snapshot.val();
+      console.log(Object.keys(data));
+      setListedItem(Object.keys(data));
+    });
+
+}, []);    
+  
+
 
   return (
     <div>

@@ -4,7 +4,7 @@ import Home from "./Home";
 import Header from "./Header";
 import Footer from "./Footer";
 import SearchPage from "./SearchPage";
-import Profile from "./Profile";
+import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import firebase from "firebase/compat/app";
@@ -30,10 +30,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchPage />} />
           <Route 
-          path="/profile" 
+          path="/dashboard" 
           element={
           <PrivateRoute user={user}>
-          <Profile />
+          <Dashboard />
           </PrivateRoute>
           } />
         </Routes>

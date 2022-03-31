@@ -9,12 +9,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 
 
-function Profile(props) {
+function Dashboard(props) {
   return (
     <div>
-      This is profile page
+      This is Dashboard page
     </div>
   );
 }
 
-export default Profile;
+export default Dashboard;

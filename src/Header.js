@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import Signout from "./Signout";
-import Profile from "./Profile"
+import Profile from "./Dashboard"
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { Avatar } from "@mui/material";
@@ -45,14 +45,10 @@ export default function Header() {
         {!user ? (
         ""
       ) : (
-        <Link to="/profile">
+        <Link to="/dashboard">
           <Avatar />
         </Link>
       )}
-
-      {/* <Link to="/profile">
-          <Avatar />
-        </Link> */}
       </div>
     </div>
   );
