@@ -6,18 +6,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Avatar } from "@mui/material";
+
+
 
 function Profile(props) {
   return (
     <div>
-      {!props.user ? (
-        ""
-      ) : (
-        <IconButton>
-          <Avatar />
-        </IconButton>
-      )}
+      This is profile page
     </div>
   );
 }

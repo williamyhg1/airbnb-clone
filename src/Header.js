@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Signup, { Signedup } from "./Signup";
+import Signup from "./Signup";
 import Signin from "./Signin";
 import Signout from "./Signout";
 import Profile from "./Profile"
 import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
-
+import { Avatar } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
@@ -42,7 +42,17 @@ export default function Header() {
         <Signup user={user} />
         <AddProperty user={user} />
         <Signout user={user} />
-        {user?<Profile user={user}/>:""}
+        {!user ? (
+        ""
+      ) : (
+        <Link to="/profile">
+          <Avatar />
+        </Link>
+      )}
+
+      {/* <Link to="/profile">
+          <Avatar />
+        </Link> */}
       </div>
     </div>
   );
