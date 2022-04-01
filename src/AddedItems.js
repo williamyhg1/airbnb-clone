@@ -1,6 +1,12 @@
 import React from "react";
 import "./Home.css";
 import "./AddedItems.css";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,9 +17,21 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { ref, onValue, remove } from "firebase/database";
 import { useState, useEffect } from "react";
 import db from "./firebase";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 function AddedItems() {
+  const [open, setOpen] = useState(false);
   const [listings, setListings] = useState("");
+  const [deleteItem, setDeleteItem] = useState();
+  const [user, setUser] = useState();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+    }
+  });
+
   useEffect(() => {
     const ListingsRef = ref(db, "Listings");
     onValue(ListingsRef, (snapshot) => {
@@ -21,6 +39,21 @@ function AddedItems() {
       setListings(data);
     });
   }, []);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event) => {
+    event.preventDefault();
+    setOpen(false);
+  };
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+    remove(ref(db, "Listings/" + deleteItem));
+    setOpen(false);
+  };
 
   const addedListings = Object.entries(listings).map(([key, data]) => (
     <Card sx={{ maxWidth: 400 }} key={key} className="card">
@@ -47,23 +80,45 @@ function AddedItems() {
             ${data.price}/night
           </Typography>
           <div>
-            <IconButton>
-              <EditIcon />
-            </IconButton>
+            {user ? (
+              <>
+                <IconButton>
+                  <EditIcon />
+                </IconButton>
 
-            <IconButton
-              onClick={() => {
-                remove(ref(db, "Listings/" + key));
-              }}
-            >
-              <DeleteOutlineOutlinedIcon fontSize="medium" />
-            </IconButton>
+                <IconButton
+                  onClick={() => {
+                    setOpen(true);
+                    setDeleteItem(key);
+                  }}
+                >
+                  <DeleteOutlineOutlinedIcon fontSize="medium" />
+                </IconButton>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </CardContent>
     </Card>
   ));
-  return <>{addedListings}</>;
+  return (
+    <>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle style={{ width: 400 }}>
+          Are you sure you want to delete this property?
+        </DialogTitle>
+
+        <DialogActions>
+          <Button onClick={handleDelete}>Delete</Button>
+
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      {addedListings}
+    </>
+  );
 }
 
 export default AddedItems;

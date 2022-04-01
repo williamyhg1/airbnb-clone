@@ -79,9 +79,7 @@ export default function AddProperty(props) {
 useEffect(() => {
 const ListingsRef = ref(db,"Listings");
       onValue(ListingsRef, (snapshot) => {
-        console.log(snapshot.val())
       const data = snapshot.val();
-      console.log(Object.keys(data));
       setListedItem(Object.keys(data));
     });
 
