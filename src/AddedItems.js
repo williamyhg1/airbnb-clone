@@ -40,10 +40,6 @@ function AddedItems() {
     });
   }, []);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = (event) => {
     event.preventDefault();
     setOpen(false);

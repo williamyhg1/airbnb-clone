@@ -51,12 +51,13 @@ function Signout(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }}>
-          {user ? "You have signed in!" : message}
+          {user ? "You have signed in" : message}
+          {user ? "" : message ? "" : "Are you sure you want to sign out?"}
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            {user ? "" : message ? "" : "Are you sure you want to sign out?"}
+            
           </DialogContentText>
         </DialogContent>
 

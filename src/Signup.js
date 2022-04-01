@@ -83,7 +83,7 @@ function Signup(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }} className="message">
-          {user ? "You have signed up!" : errorMessage}
+          {user ? "You have signed up" : errorMessage}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
