@@ -91,13 +91,13 @@ function AddedItems() {
   const handleEditSubmit = (event) => {
     event.preventDefault();
     if (!data.title) {
-      setErrorMessage("Please confirm your update before submit");
+      setErrorMessage("Please save your update before submit");
     } else if (!data.description) {
-      setErrorMessage("Please confirm your update before submit");
+      setErrorMessage("Please save your update before submit");
     } else if (!data.price) {
-      setErrorMessage("Please confirm your update before submit");
+      setErrorMessage("Please save your update before submit");
     } else if (!data.img) {
-      setErrorMessage("Please confirm your update before submit");
+      setErrorMessage("Please save your update before submit");
     } else {
       set(ref(db, "Listings/" + editItemKey), data);
       setSuccessfulMessage("Your property has been updated");
@@ -108,6 +108,7 @@ function AddedItems() {
   const handleSuccessClose = () => {
     setSuccessOpen(false);
     setSuccessfulMessage();
+    setErrorMessage();
     setEditOpen(false);
   };
 
@@ -115,6 +116,7 @@ function AddedItems() {
 
   const handleClose = (event) => {
     event.preventDefault();
+    setErrorMessage()
     setOpen(false);
   };
 
