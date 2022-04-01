@@ -43,18 +43,12 @@ export default function AddProperty(props) {
   };
 
   const writeListingData = (listingNumber) => {
-
-
-
     set(ref(db, "Listings/" + listingNumber), data);
   };
 
-  // Fix empty entry, validate entry
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    
-    
     if (!data.listingId) {
       setErrorMessage("Property ID is required");
     } else if (listedItem.includes(data.listingId)){

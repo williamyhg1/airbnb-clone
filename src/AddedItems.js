@@ -14,17 +14,38 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { ref, onValue, remove } from "firebase/database";
-import { useState, useEffect } from "react";
+import { ref, onValue, set, remove } from "firebase/database";
+import { useState, useEffect, useRef } from "react";
 import db from "./firebase";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import TextField from "@mui/material/TextField";
 
 function AddedItems() {
   const [open, setOpen] = useState(false);
+
   const [listings, setListings] = useState("");
   const [deleteItem, setDeleteItem] = useState();
   const [user, setUser] = useState();
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [editItem, setEditItem] = useState();
+
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState();
+  const [photoURL, setPhotoURL] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+  const [sucessfulMessage, setSuccessfulMessage] = useState();
+  const [successOpen, setSuccessOpen] = useState(false);
+
+  const data = {
+    listingId: editItem,
+    title,
+    description,
+    img: photoURL,
+    price,
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -36,9 +57,49 @@ function AddedItems() {
     const ListingsRef = ref(db, "Listings");
     onValue(ListingsRef, (snapshot) => {
       const data = snapshot.val();
+      console.log(data);
       setListings(data);
     });
   }, []);
+
+
+  const handleEditClose = (event) => {
+    event.preventDefault();
+    setEditOpen(false);
+  };
+  
+  const writeListingData = () => {
+    set(ref(db, "Listings/" + editItem), data);
+  };
+
+  const handleEditSubmit = (event) => {
+    event.preventDefault();
+    if (!data.listingId) {
+      setErrorMessage("Property ID is required");
+    } else if (!data.title) {
+      setErrorMessage("Property title is required");
+    } else if (!data.description) {
+      setErrorMessage("Property description is required");
+    } else if (!data.price) {
+      setErrorMessage("Price is required");
+    } else if (parseInt(data.price) < 1) {
+      setErrorMessage("Price must be over $0");
+    } else if (!data.img) {
+      setErrorMessage("Property image is required");
+    } else {
+      writeListingData();
+      setSuccessfulMessage("Your property has been updated");
+      setSuccessOpen(true);
+    }
+  };
+
+  const handleSuccessClose = () => {
+    setSuccessOpen(false);
+    window.location.reload();
+  };
+
+
+  //Delete Modal
 
   const handleClose = (event) => {
     event.preventDefault();
@@ -78,7 +139,12 @@ function AddedItems() {
           <div>
             {user ? (
               <>
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    setEditOpen(true);
+                    setEditItem(key);
+                  }}
+                >
                   <EditIcon />
                 </IconButton>
 
@@ -101,6 +167,7 @@ function AddedItems() {
   ));
   return (
     <>
+      {/* Delete property Modal */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }}>
           Are you sure you want to delete this property?
@@ -108,10 +175,101 @@ function AddedItems() {
 
         <DialogActions>
           <Button onClick={handleDelete}>Delete</Button>
-
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Edit property Modal */}
+      {sucessfulMessage ? (
+        <>
+          <Dialog open={successOpen} onClose={handleSuccessClose}>
+            <DialogTitle style={{ width: 400 }}>{sucessfulMessage}</DialogTitle>
+
+            <DialogActions>
+              <Button onClick={handleSuccessClose}>Close</Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      ) : (
+        <>
+          <Dialog open={editOpen} onClose={handleEditClose}>
+            <DialogTitle>
+              {errorMessage ? errorMessage : "Edit details of my home"}
+            </DialogTitle>
+
+            <DialogContent>
+              <DialogContentText></DialogContentText>
+              <TextField
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="title"
+                label="Property ID"
+                fullWidth
+                variant="outlined"
+                required
+                value={editItem}
+              />
+              <TextField
+                onChange={(e) => setTitle(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="title"
+                label="Property Title"
+                fullWidth
+                variant="outlined"
+                required
+                value={title}
+              />
+              <TextField
+                onChange={(e) => setDescription(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="description"
+                label="Description"
+                fullWidth
+                variant="outlined"
+                required
+                value={description}
+              />
+              <TextField
+                onChange={(e) => setPrice(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="price"
+                label="Price (AUD)"
+                fullWidth
+                variant="outlined"
+                required
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                value={price}
+              />
+              <TextField
+                onChange={(e) => setPhotoURL(e.target.value)}
+                autoComplete="off"
+                autoFocus
+                margin="dense"
+                id="photoURL"
+                label="Photo URL"
+                fullWidth
+                variant="outlined"
+                required
+                value={photoURL}
+              />
+            </DialogContent>
+
+            <DialogActions>
+              <Button onClick={handleEditClose}>Cancel</Button>
+              <Button onClick={handleEditSubmit}>Submit</Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      )}
+
       {addedListings}
     </>
   );
