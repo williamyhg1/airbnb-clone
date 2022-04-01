@@ -76,7 +76,7 @@ function AddedItems() {
     if (!photoURL) {
       setPhotoURL(editItemData.img);
     }
-    setErrorMessage("Your update is confirmed");
+    setErrorMessage("Your update has been confirmed");
   };
 
   const handleEditClose = (event) => {
