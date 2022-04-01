@@ -223,7 +223,6 @@ function AddedItems() {
                 label="Property ID"
                 fullWidth
                 variant="outlined"
-                required
                 value={editItemKey}
               />
               <TextField

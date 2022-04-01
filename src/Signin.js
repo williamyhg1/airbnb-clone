@@ -68,7 +68,7 @@ function Signin(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }} className="message">
-          {user ? "You have signed in!" : errorMessage}
+          {user ? "You have signed in" : errorMessage}
         </DialogTitle>
 
         <DialogContent>
