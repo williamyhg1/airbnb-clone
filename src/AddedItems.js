@@ -76,7 +76,7 @@ function AddedItems() {
     if (!photoURL) {
       setPhotoURL(editItemData.img);
     }
-    setErrorMessage("Your update has been confirmed");
+    setErrorMessage("Your update has been saved");
   };
 
   const handleEditClose = (event) => {
@@ -91,15 +91,13 @@ function AddedItems() {
   const handleEditSubmit = (event) => {
     event.preventDefault();
     if (!data.title) {
-      setErrorMessage("Property title is required");
+      setErrorMessage("Please confirm your update before submit");
     } else if (!data.description) {
-      setErrorMessage("Property description is required");
+      setErrorMessage("Please confirm your update before submit");
     } else if (!data.price) {
-      setErrorMessage("Price is required");
-    } else if (parseInt(data.price) < 1) {
-      setErrorMessage("Price must be over $0");
+      setErrorMessage("Please confirm your update before submit");
     } else if (!data.img) {
-      setErrorMessage("Property image is required");
+      setErrorMessage("Please confirm your update before submit");
     } else {
       set(ref(db, "Listings/" + editItemKey), data);
       setSuccessfulMessage("Your property has been updated");
@@ -109,7 +107,8 @@ function AddedItems() {
 
   const handleSuccessClose = () => {
     setSuccessOpen(false);
-    window.location.reload();
+    setSuccessfulMessage();
+    setEditOpen(false);
   };
 
   //Delete Modal
@@ -213,7 +212,7 @@ function AddedItems() {
 
             <DialogContent>
               <DialogContentText>
-                Please confirm your update before submit
+                Please save your update before submit
               </DialogContentText>
               <TextField
                 autoComplete="off"
@@ -286,7 +285,7 @@ function AddedItems() {
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleConfirm}>Confirm</Button>
+              <Button onClick={handleConfirm}>Save</Button>
               <Button onClick={handleEditSubmit}>Submit</Button>
               <Button onClick={handleEditClose}>Cancel</Button>
             </DialogActions>
