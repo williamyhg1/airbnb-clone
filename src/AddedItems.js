@@ -29,23 +29,17 @@ function AddedItems() {
   const [user, setUser] = useState();
 
   const [editOpen, setEditOpen] = useState(false);
-  const [editItem, setEditItem] = useState();
+  const [editItemKey, setEditItemKey] = useState();
+  const [editItemData, setEditItemData] = useState();
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [photoURL, setPhotoURL] = useState();
+
   const [errorMessage, setErrorMessage] = useState();
   const [sucessfulMessage, setSuccessfulMessage] = useState();
   const [successOpen, setSuccessOpen] = useState(false);
-
-  const data = {
-    listingId: editItem,
-    title,
-    description,
-    img: photoURL,
-    price,
-  };
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -53,30 +47,50 @@ function AddedItems() {
     }
   });
 
+  const data = {
+    title,
+    listingId: editItemKey,
+    description,
+    img: photoURL,
+    price,
+  };
+
   useEffect(() => {
     const ListingsRef = ref(db, "Listings");
     onValue(ListingsRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       setListings(data);
     });
   }, []);
 
+  const handleConfirm = () => {
+    if (!title) {
+      setTitle(editItemData.title);
+    }
+    if (!price) {
+      setPrice(editItemData.price);
+    }
+    if (!description) {
+      setDescription(editItemData.description);
+    }
+    if (!photoURL) {
+      setPhotoURL(editItemData.img);
+    }
+    setErrorMessage("Your update is confirmed");
+  };
 
   const handleEditClose = (event) => {
     event.preventDefault();
+    setTitle();
+    setPrice();
+    setDescription();
+    setPhotoURL();
     setEditOpen(false);
-  };
-  
-  const writeListingData = () => {
-    set(ref(db, "Listings/" + editItem), data);
   };
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
-    if (!data.listingId) {
-      setErrorMessage("Property ID is required");
-    } else if (!data.title) {
+    if (!data.title) {
       setErrorMessage("Property title is required");
     } else if (!data.description) {
       setErrorMessage("Property description is required");
@@ -87,7 +101,7 @@ function AddedItems() {
     } else if (!data.img) {
       setErrorMessage("Property image is required");
     } else {
-      writeListingData();
+      set(ref(db, "Listings/" + editItemKey), data);
       setSuccessfulMessage("Your property has been updated");
       setSuccessOpen(true);
     }
@@ -97,7 +111,6 @@ function AddedItems() {
     setSuccessOpen(false);
     window.location.reload();
   };
-
 
   //Delete Modal
 
@@ -113,7 +126,7 @@ function AddedItems() {
   };
 
   const addedListings = Object.entries(listings).map(([key, data]) => (
-    <Card sx={{ maxWidth: 400 }} key={key} className="card">
+    <Card sx={{ maxWidth: 400 }} key={key} className="card" data={data}>
       {" "}
       <CardMedia component="img" height="300" image={data.img} alt="" />
       <CardContent className="content">
@@ -142,7 +155,8 @@ function AddedItems() {
                 <IconButton
                   onClick={() => {
                     setEditOpen(true);
-                    setEditItem(key);
+                    setEditItemKey(key);
+                    setEditItemData(data);
                   }}
                 >
                   <EditIcon />
@@ -198,7 +212,9 @@ function AddedItems() {
             </DialogTitle>
 
             <DialogContent>
-              <DialogContentText></DialogContentText>
+              <DialogContentText>
+                Please confirm your update before submit
+              </DialogContentText>
               <TextField
                 autoComplete="off"
                 autoFocus
@@ -208,10 +224,12 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={editItem}
+                value={editItemKey}
               />
               <TextField
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
                 autoComplete="off"
                 autoFocus
                 margin="dense"
@@ -220,10 +238,12 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={title}
+                value={title ? title : editItemData?.title}
               />
               <TextField
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
                 autoComplete="off"
                 autoFocus
                 margin="dense"
@@ -232,10 +252,12 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={description}
+                value={description ? description : editItemData?.description}
               />
               <TextField
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
                 autoComplete="off"
                 autoFocus
                 margin="dense"
@@ -246,10 +268,12 @@ function AddedItems() {
                 required
                 type="number"
                 InputProps={{ inputProps: { min: 0 } }}
-                value={price}
+                value={price ? price : editItemData?.price}
               />
               <TextField
-                onChange={(e) => setPhotoURL(e.target.value)}
+                onChange={(e) => {
+                  setPhotoURL(e.target.value);
+                }}
                 autoComplete="off"
                 autoFocus
                 margin="dense"
@@ -258,13 +282,14 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={photoURL}
+                value={photoURL ? photoURL : editItemData?.img}
               />
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleEditClose}>Cancel</Button>
+              <Button onClick={handleConfirm}>Confirm</Button>
               <Button onClick={handleEditSubmit}>Submit</Button>
+              <Button onClick={handleEditClose}>Cancel</Button>
             </DialogActions>
           </Dialog>
         </>

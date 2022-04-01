@@ -46,12 +46,11 @@ export default function AddProperty(props) {
     set(ref(db, "Listings/" + listingNumber), data);
   };
 
- 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!data.listingId) {
       setErrorMessage("Property ID is required");
-    } else if (listedItem.includes(data.listingId)){
+    } else if (listedItem.includes(data.listingId)) {
       setErrorMessage("Property ID has exhisted");
     } else if (!data.title) {
       setErrorMessage("Property title is required");
@@ -69,17 +68,13 @@ export default function AddProperty(props) {
     }
   };
 
-
-useEffect(() => {
-const ListingsRef = ref(db,"Listings");
-      onValue(ListingsRef, (snapshot) => {
+  useEffect(() => {
+    const ListingsRef = ref(db, "Listings");
+    onValue(ListingsRef, (snapshot) => {
       const data = snapshot.val();
       setListedItem(Object.keys(data));
     });
-
-}, []);    
-  
-
+  }, []);
 
   return (
     <div>
