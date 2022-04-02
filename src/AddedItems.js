@@ -30,7 +30,6 @@ function AddedItems() {
 
   const [editOpen, setEditOpen] = useState(false);
   const [editItemKey, setEditItemKey] = useState();
-  const [editItemData, setEditItemData] = useState();
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -63,41 +62,25 @@ function AddedItems() {
     });
   }, []);
 
-  const handleConfirm = () => {
-    if (!title) {
-      setTitle(editItemData.title);
-    }
-    if (!price) {
-      setPrice(editItemData.price);
-    }
-    if (!description) {
-      setDescription(editItemData.description);
-    }
-    if (!photoURL) {
-      setPhotoURL(editItemData.img);
-    }
-    setErrorMessage("Your update has been saved");
-  };
-
   const handleEditClose = (event) => {
     event.preventDefault();
-    setTitle();
-    setPrice();
-    setDescription();
-    setPhotoURL();
+    setErrorMessage();
     setEditOpen(false);
   };
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
+
     if (!data.title) {
-      setErrorMessage("Please save your update before submit");
+      setErrorMessage("Property title is required");
     } else if (!data.description) {
-      setErrorMessage("Please save your update before submit");
+      setErrorMessage("Property description is requred");
     } else if (!data.price) {
-      setErrorMessage("Please save your update before submit");
+      setErrorMessage("Price is required");
+    } else if (parseInt(data.price) < 1) {
+      setErrorMessage("Price must be over $0");
     } else if (!data.img) {
-      setErrorMessage("Please save your update before submit");
+      setErrorMessage("Property image is required");
     } else {
       set(ref(db, "Listings/" + editItemKey), data);
       setSuccessfulMessage("Your property has been updated");
@@ -116,7 +99,7 @@ function AddedItems() {
 
   const handleClose = (event) => {
     event.preventDefault();
-    setErrorMessage()
+    setErrorMessage();
     setOpen(false);
   };
 
@@ -157,7 +140,10 @@ function AddedItems() {
                   onClick={() => {
                     setEditOpen(true);
                     setEditItemKey(key);
-                    setEditItemData(data);
+                    setTitle(data.title);
+                    setPrice(data.price);
+                    setDescription(data.description);
+                    setPhotoURL(data.img);
                   }}
                 >
                   <EditIcon />
@@ -238,7 +224,7 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={title ? title : editItemData?.title}
+                value={title}
               />
               <TextField
                 onChange={(e) => {
@@ -252,7 +238,7 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={description ? description : editItemData?.description}
+                value={description}
               />
               <TextField
                 onChange={(e) => {
@@ -268,7 +254,7 @@ function AddedItems() {
                 required
                 type="number"
                 InputProps={{ inputProps: { min: 0 } }}
-                value={price ? price : editItemData?.price}
+                value={price}
               />
               <TextField
                 onChange={(e) => {
@@ -282,13 +268,13 @@ function AddedItems() {
                 fullWidth
                 variant="outlined"
                 required
-                value={photoURL ? photoURL : editItemData?.img}
+                value={photoURL}
               />
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={handleConfirm}>Save</Button>
-              <Button onClick={handleEditSubmit}>Submit</Button>
+              {/* <Button onClick={handleConfirm}>Save</Button> */}
+              <Button onClick={handleEditSubmit}>Save</Button>
               <Button onClick={handleEditClose}>Cancel</Button>
             </DialogActions>
           </Dialog>
