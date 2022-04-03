@@ -30,28 +30,23 @@ function Signup(props) {
 
   const handleRegister = (event) => {
     event.preventDefault();
-    const data = {
-      email,
-      password,
-      passwordConfirm,
-    };
 
-    if (!data.email) {
+    if (!email) {
       setErrorMessage("Email address is required");
-    } else if (!data.email.includes("@" && ".com")) {
+    } else if (!email.includes("@" && ".com")) {
       setErrorMessage("Invalid email address");
-    } else if (!data.password) {
+    } else if (!password) {
       setErrorMessage("Password is requried");
-    } else if (data.password.length < 7) {
+    } else if (password.length < 7) {
       setErrorMessage("Password is too short");
-    } else if (data.password && !data.passwordConfirm) {
+    } else if (password && !passwordConfirm) {
       setErrorMessage("Please confirm your password");
-    } else if (data.password !== data.passwordConfirm) {
+    } else if (password !== passwordConfirm) {
       setErrorMessage("Passwords mismatched");
     } else {
-      createUserWithEmailAndPassword(auth, data.email, data.password)
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Signed in
+          // Sign up
           const user = userCredential.user;
           setUser(user);
           setEmail();
@@ -65,17 +60,10 @@ function Signup(props) {
     }
   };
 
-  const handleEnterPress = (event) => {
-    console.log(JSON.stringify(event.key));
-    // if (event.key === "Enter"){
-    //   handleRegister();
-    // }
-  };
-
   return (
     <div>
-      {user || props.user ? (
-        ""
+      {props.user ? (
+        <></>
       ) : (
         <Button color="primary" onClick={handleClickOpen}>
           Sign up
@@ -83,19 +71,17 @@ function Signup(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }} className="message">
-          {user ? "You have signed up" : errorMessage}
+          {user
+            ? "You have signed up"
+            : errorMessage
+            ? errorMessage
+            : "Please enter your email address and password to register an account"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {user
-              ? ""
-              : errorMessage
-              ? ""
-              : "Please enter your email address and password to register an account"}
-          </DialogContentText>
+          <DialogContentText></DialogContentText>
 
           {user ? (
-            ""
+            <></>
           ) : (
             <div>
               <TextField
@@ -108,8 +94,6 @@ function Signup(props) {
                 fullWidth
                 variant="outlined"
                 required
-                value={user ? "" : email}
-                onKeyPress={handleEnterPress}
               />
               <TextField
                 onChange={(e) => setPassword(e.target.value)}
@@ -122,8 +106,6 @@ function Signup(props) {
                 variant="outlined"
                 type="password"
                 required
-                value={user ? "" : password}
-                onKeyPress={handleEnterPress}
               />
               <TextField
                 onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -136,8 +118,6 @@ function Signup(props) {
                 variant="outlined"
                 type="password"
                 required
-                value={user ? "" : passwordConfirm}
-                onKeyPress={handleEnterPress}
               />
             </div>
           )}

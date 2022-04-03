@@ -27,23 +27,19 @@ function Signin(props) {
     setOpen(false);
   };
 
-  const handleRegister = (event) => {
+  const handleSignin = (event) => {
     event.preventDefault();
-    const data = {
-      email,
-      password,
-    };
 
-    if (!data.email) {
+    if (!email) {
       setErrorMessage("Email address is required");
-    } else if (!data.email.includes("@" && ".com")) {
+    } else if (!email.includes("@" && ".com")) {
       setErrorMessage("Invalid email address");
-    } else if (!data.password) {
+    } else if (!password) {
       setErrorMessage("Password is requried");
-    } else if (data.password.length < 7) {
+    } else if (password.length < 7) {
       setErrorMessage("Password is too short");
     } else {
-      signInWithEmailAndPassword(auth, data.email, data.password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
@@ -51,6 +47,7 @@ function Signin(props) {
           setEmail();
           setPassword();
         })
+        // Error
         .catch((error) => {
           setErrorMessage("Incorrect account details");
         });
@@ -60,7 +57,7 @@ function Signin(props) {
   return (
     <div>
       {props.user ? (
-        ""
+        <></>
       ) : (
         <Button color="primary" onClick={handleClickOpen}>
           Sign in
@@ -68,20 +65,18 @@ function Signin(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }} className="message">
-          {user ? "You have signed in" : errorMessage}
+          {user
+            ? "You have signed in"
+            : errorMessage
+            ? errorMessage
+            : "Please enter your email address and password to sign in"}
         </DialogTitle>
 
         <DialogContent>
-          <DialogContentText>
-            {user
-              ? ""
-              : errorMessage
-              ? ""
-              : "Please enter your email address and password to sign in"}
-          </DialogContentText>
+          <DialogContentText></DialogContentText>
 
           {user ? (
-            ""
+            <></>
           ) : (
             <>
               <TextField
@@ -94,7 +89,6 @@ function Signin(props) {
                 fullWidth
                 variant="outlined"
                 required
-                value={user ? "" : email}
               />
               <TextField
                 onChange={(e) => setPassword(e.target.value)}
@@ -107,14 +101,13 @@ function Signin(props) {
                 variant="outlined"
                 type="password"
                 required
-                value={user ? "" : password}
               />
             </>
           )}
         </DialogContent>
 
         <DialogActions>
-          {user ? "" : <Button onClick={handleRegister}>Sign in</Button>}
+          {user ? <></> : <Button onClick={handleSignin}>Sign in</Button>}
           {user ? (
             <Button onClick={handleClose}>Close</Button>
           ) : (
