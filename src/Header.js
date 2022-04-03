@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import Signout from "./Signout";
@@ -16,11 +16,18 @@ import { onAuthStateChanged } from "firebase/auth";
 export default function Header() {
   const [user, setUser] = useState();
 
-  onAuthStateChanged(auth, (user) => {
+  
+useEffect(() => {
+ onAuthStateChanged(auth, (user) => {
     if (user) {
       setUser(user);
+    } else {
+      setUser();
     }
   });
+}, []);
+
+  
 
   return (
     <div className="header">

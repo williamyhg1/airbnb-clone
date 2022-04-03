@@ -43,6 +43,8 @@ function AddedItems() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setUser(user);
+    } else {
+      setUser()
     }
   });
 

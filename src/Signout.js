@@ -10,17 +10,14 @@ import { auth } from "./firebase";
 
 function Signout(props) {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState();
   const [message, setMessage] = useState();
 
   const handleClickOpen = () => {
-    setUser();
     setOpen(true);
   };
 
   const handleClose = (event) => {
     event.preventDefault();
-    window.location.reload();
     setOpen(false);
   };
 
@@ -43,7 +40,7 @@ function Signout(props) {
   return (
     <div>
       {!props.user ? (
-        ""
+        <></>
       ) : (
         <Button color="primary" onClick={handleClickOpen}>
           Sign out
@@ -51,8 +48,7 @@ function Signout(props) {
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ width: 400 }}>
-          {user ? "You have signed in" : message}
-          {user ? "" : message ? "" : "Are you sure you want to sign out?"}
+          {props.user ? "Are you sure you want to sign out?" : message ? message : ""}
         </DialogTitle>
 
         <DialogContent>
@@ -62,8 +58,8 @@ function Signout(props) {
         </DialogContent>
 
         <DialogActions>
-          {message ? "" : <Button onClick={handleSignout}>Sign out</Button>}
-          {message ? (
+          {!props.user ? "" : <Button onClick={handleSignout}>Sign out</Button>}
+          {!props.user ? (
             <Button onClick={handleClose}>Close</Button>
           ) : (
             <Button onClick={handleCancel}>Cancel</Button>

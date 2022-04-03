@@ -59,7 +59,7 @@ function Signin(props) {
 
   return (
     <div>
-      {user || props.user ? (
+      {props.user ? (
         ""
       ) : (
         <Button color="primary" onClick={handleClickOpen}>
