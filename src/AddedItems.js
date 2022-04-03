@@ -107,6 +107,8 @@ function AddedItems() {
   const handleDelete = (event) => {
     event.preventDefault();
     remove(ref(db, "Listings/" + deleteItem));
+    setSuccessfulMessage("Your property has been deleted")
+    setSuccessOpen(true);
     setOpen(false);
   };
 
