@@ -17,7 +17,9 @@ export default function AddProperty(props) {
   const [description, setDescription] = useState();
   const [price, setPrice] = useState();
   const [photoURL, setPhotoURL] = useState();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
+  const [successMessage, setSuccessMessage] =useState();
   const [errorMessage, setErrorMessage] = useState();
   const data = {
     title,
@@ -42,6 +44,11 @@ export default function AddProperty(props) {
     setOpen(false);
   };
 
+  const handleSuccessClose = (event) => {
+    event.preventDefault();
+    setSuccessOpen(false);
+  };
+
   const writeListingData = (listingNumber) => {
     set(ref(db, "Listings/" + listingNumber), data);
   };
@@ -64,6 +71,8 @@ export default function AddProperty(props) {
       setErrorMessage("Property image is required");
     } else {
       writeListingData(listingId);
+      setSuccessMessage("Your property has been added")
+      setSuccessOpen(true)
       setOpen(false);
     }
   };
@@ -79,7 +88,7 @@ export default function AddProperty(props) {
   return (
     <div>
       {!props.user ? (
-        ""
+        <></>
       ) : (
         <Button
           color="primary"
@@ -89,7 +98,29 @@ export default function AddProperty(props) {
           Add my home
         </Button>
       )}
-      <Dialog open={open} onClose={handleClose}>
+        {successOpen? (<>
+          <Dialog open={successOpen} onClose={handleSuccessClose}>
+        <DialogTitle style={{ width: 400 }}>
+          {successMessage}
+        </DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+        
+            <Button onClick={handleSuccessClose}>Close</Button>
+         
+         
+        </DialogActions>
+      </Dialog>
+
+        </>):open?(
+        <>
+<Dialog open={open} onClose={handleClose}>
         <DialogTitle>{errorMessage ? errorMessage : "Add a home"}</DialogTitle>
 
         <DialogContent>
@@ -162,6 +193,10 @@ export default function AddProperty(props) {
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
+
+        </>):<></>}
+
+      
     </div>
   );
 }
