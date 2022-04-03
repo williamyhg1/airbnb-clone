@@ -70,7 +70,6 @@ function AddedItems() {
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
-
     if (!data.title) {
       setErrorMessage("Property title is required");
     } else if (!data.description) {
@@ -85,6 +84,7 @@ function AddedItems() {
       set(ref(db, "Listings/" + editItemKey), data);
       setSuccessfulMessage("Your property has been updated");
       setSuccessOpen(true);
+      setEditOpen(false);
     }
   };
 
@@ -92,7 +92,6 @@ function AddedItems() {
     setSuccessOpen(false);
     setSuccessfulMessage();
     setErrorMessage();
-    setEditOpen(false);
   };
 
   //Delete Modal
@@ -181,7 +180,7 @@ function AddedItems() {
       </Dialog>
 
       {/* Edit property Modal */}
-      {sucessfulMessage ? (
+      {successOpen ? (
         <>
           <Dialog open={successOpen} onClose={handleSuccessClose}>
             <DialogTitle style={{ width: 400 }}>{sucessfulMessage}</DialogTitle>
@@ -191,7 +190,7 @@ function AddedItems() {
             </DialogActions>
           </Dialog>
         </>
-      ) : (
+      ) : editOpen ? (
         <>
           <Dialog open={editOpen} onClose={handleEditClose}>
             <DialogTitle>
@@ -199,9 +198,7 @@ function AddedItems() {
             </DialogTitle>
 
             <DialogContent>
-              <DialogContentText>
-                Please save your update before submit
-              </DialogContentText>
+              <DialogContentText></DialogContentText>
               <TextField
                 autoComplete="off"
                 autoFocus
@@ -273,14 +270,14 @@ function AddedItems() {
             </DialogContent>
 
             <DialogActions>
-              {/* <Button onClick={handleConfirm}>Save</Button> */}
               <Button onClick={handleEditSubmit}>Save</Button>
               <Button onClick={handleEditClose}>Cancel</Button>
             </DialogActions>
           </Dialog>
         </>
+      ) : (
+        <></>
       )}
-
       {addedListings}
     </>
   );
