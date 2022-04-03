@@ -14,33 +14,29 @@ import { ref, onValue } from "firebase/database";
 const Home = () => {
   const allCategory = DATA.category.map((item, index) => (
     <Card sx={{ maxWidth: 400 }} className="card" key={index}>
-      <CardActionArea>
-        <CardMedia component="img" height="300" image={item.img} alt="" />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {item.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <CardMedia component="img" height="300" image={item.img} alt="" />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {item.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.description}
+        </Typography>
+      </CardContent>
     </Card>
   ));
 
   const allListings = DATA.homeListings.map((item, index) => (
     <Card sx={{ maxWidth: 400 }} className="card" key={index}>
-      <CardActionArea>
-        <CardMedia component="img" height="300" image={item.img} alt="" />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {item.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <CardMedia component="img" height="300" image={item.img} alt="" />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {item.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.description}
+        </Typography>
+      </CardContent>
     </Card>
   ));
 
