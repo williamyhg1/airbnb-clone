@@ -42,7 +42,7 @@ function Signup(props) {
     } else if (password && !passwordConfirm) {
       setErrorMessage("Please confirm your password");
     } else if (password !== passwordConfirm) {
-      setErrorMessage("Passwords mismatched");
+      setErrorMessage("Password does not match");
     } else {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
